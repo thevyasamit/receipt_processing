@@ -18,7 +18,7 @@ async def process_receipt(receipt: ReceiptIn):
     Process a receipt and return its ID and points.
     """
     points = calculate_points(receipt)  # Compute loyalty points
-    receipt_id = save_receipt(receipt.dict(), points)  # Store with generated ID
+    receipt_id = save_receipt(receipt.model_dump(), points)  # Store with generated ID
     return {"id": receipt_id, "points": points}
 
 
