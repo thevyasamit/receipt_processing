@@ -1,0 +1,5 @@
+fastapi            # High-performance ASGI framework
+uvicorn[standard]  # ASGI server for production
+pydantic           # Data validation and settings management
+pydantic-settings  # Settings management using Pydantic
+pytest             # Testing framework

@@ -1,0 +1,97 @@
+openapi: 3.0.0
+info:
+  title: Receipt Processor API
+  version: 1.0.0
+  description: API for processing receipts and calculating loyalty points
+
+paths:
+  /receipts/process:
+    post:
+      summary: Process a receipt and calculate points
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ReceiptIn'
+      responses:
+        '200':
+          description: Successfully processed receipt
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PointsOut'
+
+  /receipts/{retailer}/points:
+    get:
+      summary: Get points for a retailer
+      parameters:
+        - name: retailer
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Successfully retrieved points
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PointsOut'
+        '404':
+          description: Receipt not found
+
+components:
+  schemas:
+    Item:
+      type: object
+      properties:
+        shortDescription:
+          type: string
+          description: Descriptor of the item on the receipt
+        price:
+          type: number
+          format: float
+          description: Price of the item
+      required:
+        - shortDescription
+        - price
+
+    ReceiptIn:
+      type: object
+      properties:
+        retailer:
+          type: string
+          description: Name of retailer/store
+        purchaseDate:
+          type: string
+          format: date
+          description: Date in YYYY-MM-DD format
+        purchaseTime:
+          type: string
+          format: time
+          description: Time in HH:MM (24h) format
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/Item'
+          description: List of purchased items
+        total:
+          type: number
+          format: float
+          description: Total amount charged
+      required:
+        - retailer
+        - purchaseDate
+        - purchaseTime
+        - items
+        - total
+
+    PointsOut:
+      type: object
+      properties:
+        points:
+          type: integer
+          description: Calculated loyalty points
+      required:
+        - points 
