@@ -12,8 +12,8 @@ A FastAPI-based service for processing receipts and calculating loyalty points. 
 
 ## Prerequisites
 
-- Python 3.8+
-- Docker (optional, for containerized deployment)
+- Python 3.12+
+- Docker (for containerized deployment)
 
 ## Installation
 
@@ -32,6 +32,24 @@ source venv/bin/activate  # On Windows, use: venv\Scripts\activate
 3. Install dependencies:
 ```bash
 pip install -r requirements.txt
+```
+
+---
+
+## ⚡️ Using [uv](https://github.com/astral-sh/uv) for Fast Dependency Management
+
+> **Note:** I personally use [uv](https://github.com/astral-sh/uv) as my preferred Python package manager because it's super fast and reliable. You are encouraged to use it for the best experience!
+
+For faster and more reliable installs, you can use [uv](https://github.com/astral-sh/uv) instead of pip:
+
+### Install uv
+```bash
+curl -Ls https://astral.sh/uv/install.sh | sh
+```
+
+### Install dependencies with uv
+```bash
+uv pip install -r requirements.txt
 ```
 
 ## Running the Application
