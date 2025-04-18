@@ -2,7 +2,6 @@ from fastapi import APIRouter, HTTPException, status
 from app.schemas import ReceiptIn, ReceiptOut, PointsOut
 from app.services import calculate_points
 from app.models import save_receipt, get_receipt
-from typing import Dict
 
 
 router = APIRouter()
@@ -19,7 +18,7 @@ async def process_receipt(receipt: ReceiptIn):
     """
     points = calculate_points(receipt)  # Compute loyalty points
     receipt_id = save_receipt(receipt.model_dump(), points)  # Store with generated ID
-    return {"id": receipt_id, "points": points}
+    return {"id": receipt_id}
 
 
 @router.get(
@@ -36,7 +35,7 @@ async def get_points(receipt_id: str):
         # No record found → raise 404 Not Found
         raise HTTPException(
             status_code=status.HTTP_404_NOT_FOUND,
-            detail="Receipt not found"
+            detail="No receipt found for that ID."
         )
     # Return stored points
     return {"points": data["points"]} 

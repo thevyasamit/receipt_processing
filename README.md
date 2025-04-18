@@ -47,11 +47,25 @@ The API will be available at `http://localhost:8000`
 
 ### Docker Deployment
 
-Build and run the Docker container:
+**Note:** This Docker image is not published to any Docker registry. You must build it locally, and Docker must be installed on your system.
+
+Build and run the Docker container locally:
 ```bash
-docker build -t receipt-processor .
-docker run -p 8000:8000 receipt-processor
+# Build the Docker image and tag it as 'receipt-processor:latest'
+docker build -t receipt-processor:latest .
+
+# List all Docker images to verify the image was built successfully
+docker images
+# You should see an entry for receipt-processor:latest
+
+# Run the container, mapping port 8000 on your host to port 80 in the container
+# The --rm flag ensures the container is removed after it stops
+docker run --rm -p 8000:80 receipt-processor:latest
 ```
+
+- The API will be available at `http://localhost:8000` after the container starts.
+- If you make code changes, rebuild the image to apply updates.
+- The `--rm` flag ensures the container is cleaned up after you stop it.
 
 ## API Documentation
 
