@@ -94,30 +94,41 @@ Once the server is running, you can access the interactive API documentation at:
 ## API Endpoints
 
 ### Process Receipt
+
 ```bash
-curl -X POST "http://localhost:8000/receipts/process" \
+curl -X POST "http://localhost:8000/receipts" \
      -H "Content-Type: application/json" \
      -d '{
-       "retailer": "Target",
-       "purchaseDate": "2024-04-17",
-       "purchaseTime": "14:30",
+       "retailer": "M&M Corner Market",
+       "purchaseDate": "2022-03-20",
+       "purchaseTime": "14:33",
        "items": [
-         {
-           "shortDescription": "Mountain Dew 12PK",
-           "price": 6.49
-         },
-         {
-           "shortDescription": "Emils Cheese Pizza",
-           "price": 12.25
-         }
+         { "shortDescription": "Gatorade", "price": "2.25" },
+         { "shortDescription": "Gatorade", "price": "2.25" },
+         { "shortDescription": "Gatorade", "price": "2.25" },
+         { "shortDescription": "Gatorade", "price": "2.25" }
        ],
-       "total": 18.74
+       "total": "9.00"
      }'
 ```
 
-### Get Points for Retailer
+Sample response breakdown:
+```text
+Total Points: 109
+Breakdown:
+    50 points - total is a round dollar amount
+    25 points - total is a multiple of 0.25
+    14 points - retailer name (M&M Corner Market) has 14 alphanumeric characters
+                note: '&' is not alphanumeric
+    10 points - 2:33pm is between 2:00pm and 4:00pm
+    10 points - 4 items (2 pairs @ 5 points each)
+  + ---------
+  = 109 points
+```
+
+### Get Points for Receipt ID
 ```bash
-curl "http://localhost:8000/receipts/Target/points"
+curl "http://localhost:8000/receipts/5f9cc72b-cdad-4880-bef2-b2a0d5dab5b3/points"
 ```
 
 ## Testing
