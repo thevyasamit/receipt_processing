@@ -93,10 +93,28 @@ Once the server is running, you can access the interactive API documentation at:
 
 ## API Endpoints
 
+### API Endpoints
+
+| Path                                 | Method | Description                                  |
+|--------------------------------------|--------|----------------------------------------------|
+| `/`                                  | GET    | Welcome message (service is running)         |
+| `/receipts/process`                  | POST   | Process a receipt and get its ID             |
+| `/receipts/{receipt_id}/points`      | GET    | Get points for a processed receipt           |
+
+### Welcome Message
+
+```bash
+curl http://localhost:8000/
+```
+Response:
+```json
+{"message": "Welcome to the Receipt Processor API. The service is running!"}
+```
+
 ### Process Receipt
 
 ```bash
-curl -X POST "http://localhost:8000/receipts" \
+curl -X POST "http://localhost:8000/receipts/process" \
      -H "Content-Type: application/json" \
      -d '{
        "retailer": "M&M Corner Market",
@@ -111,8 +129,23 @@ curl -X POST "http://localhost:8000/receipts" \
        "total": "9.00"
      }'
 ```
+Sample response:
+```json
+{"id": "some-receipt-id"}
+```
 
-Sample response breakdown:
+### Get Points for a Receipt
+
+```bash
+curl http://localhost:8000/receipts/{receipt_id}/points
+```
+Replace `{receipt_id}` with the ID returned from the previous step.
+Sample response:
+```json
+{"points": 109}
+```
+
+Sample points breakdown (for reference):
 ```text
 Total Points: 109
 Breakdown:
