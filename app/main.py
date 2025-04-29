@@ -25,6 +25,9 @@ def create_app():
         prefix="/receipts",
         tags=["receipts"]
     )
+    @app.get("/")
+    async def root():
+        return {"message": "Welcome to the Receipt Processor API. The service is running!"}
     return app
 
 
